@@ -1,11 +1,7 @@
 # our-planet
-CRUD project to add new species
+CRUD project to add new animal species.
 
-<img
-src=“images/mockup.png”
-raw=true
-alt=“Subject Pronouns”
-style=“margin-right: 10px;”
-/>
+![Test Image 1](https://user-images.githubusercontent.com/48626342/88455140-d4301e80-ce6a-11ea-85ce-5ab0cbacab6c.png)
 
-<img width=“964” alt=“mockup” src=“https://github.com/DobroTora/our-planet/issues/1”>
+
+
