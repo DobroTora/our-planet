@@ -1,4 +1,5 @@
 # our-planet
 CRUD project to add new species
 
-![Image of Mockup](https://github.com/DobroTora/our-planet/issues/1)
+
+<img width=“964” alt=“mockup” src=“https://github.com/DobroTora/our-planet/issues/1”>
