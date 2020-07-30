@@ -1,0 +1,12 @@
+.brand-logo {
+    display: flex;
+    justify-content: center;
+}
+.collection-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.material-icons {
+    cursor: pointer;
+}
