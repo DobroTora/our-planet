@@ -1,13 +1,13 @@
 const graphql = require('graphql');
 const _ = require('lodash');
 
-const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLBoolean, GraphQLInt } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLBoolean, GraphQLInt, GraphQLList } = graphql;
 
 var animals = [
-    {name: 'Tiger', type: 'mammal', id:'1'},
-    {name: 'Tabby Cat', type: 'mammal', id:'2'},
-    {name: 'Deer', type: 'mammal', id:'3'},
-    {name: 'Sloth', type: 'mammal', id:'4'},
+    {name: 'Tiger', type: 'mammal', id:'1', eatingHabitsId: '1'},
+    {name: 'Tabby Cat', type: 'mammal', id:'2', eatingHabitsId: '1'},
+    {name: 'Deer', type: 'mammal', id:'3', eatingHabitsId: '2'},
+    {name: 'Sloth', type: 'mammal', id:'4', eatingHabitsId: '3'},
 ]
 
 var eatingHabits = [
@@ -22,7 +22,13 @@ const AnimalType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLID},
         name: {type: GraphQLString},
-        isExtinct: {type: GraphQLBoolean}
+        isExtinct: {type: GraphQLBoolean},
+        eating:{
+            type: EatingHabitsType,
+            resolve(parent, args){
+                return _.find(eatingHabits, {id:parent.eatingHabitsId})
+            }
+        }
     })
 })
 
@@ -31,7 +37,13 @@ const EatingHabitsType = new GraphQLObjectType({
     fields: () => ({
         id: { type:GraphQLID},
         name: { type:GraphQLString },
-        maxSpeed: {type: GraphQLInt }
+        maxSpeed: {type: GraphQLInt },
+        animal: {
+            type: new GraphQLList(AnimalType),
+            resolve(parent, args){
+                return _.filter(animals, {eatingHabitsId:parent.id})
+            }
+        }
     })
 })
 
@@ -51,11 +63,22 @@ const RootQuery = new GraphQLObjectType({
             resolve(parent, args){
                 return _.find(eatingHabits,{id:args.id})
             }
-        }
+        },
+        animals: {
+            type: new GraphQLList(AnimalType),
+            resolve(parent, args){
+                return animals
+            }
+        },
+        eating: {
+            type: new GraphQLList(AnimalType),
+            resolve(parent, args){
+                return animals
+            }
+        },
     }
 })
 
 module.exports = new GraphQLSchema({
     query: RootQuery
 })
-
